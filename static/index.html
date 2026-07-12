@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DemogFace AI - Facial Age & Gender Analytics Dashboard</title>
+    <meta name="description" content="DemogFace AI allows real-time facial age and gender analysis, face classification, and dynamic demographic reporting powered by deep learning.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="dark-mode">
+    <div class="app-container">
+        <!-- Sidebar or Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-face-laugh-beam logo-icon"></i>
+                <div class="logo-text">
+                    <h1>DemogFace <span>AI</span></h1>
+                    <p>Facial Demographics Intelligence</p>
+                </div>
+            </div>
+            
+            <div class="status-panel" id="model-status-panel">
+                <span class="status-indicator warning" id="status-indicator"></span>
+                <div class="status-info">
+                    <div class="status-label" id="status-title">Model: Loading...</div>
+                    <div class="status-details" id="status-desc">Verifying checkpoint status...</div>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Left Panel: Upload / Camera Capture -->
+            <section class="card control-card" id="control-section">
+                <h2><i class="fa-solid fa-sliders"></i> Capture & Upload</h2>
+                
+                <!-- Toggle Tab for Camera/Upload -->
+                <div class="tabs-container">
+                    <button class="tab-btn active" id="tab-upload" onclick="switchTab('upload')">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Upload Images
+                    </button>
+                    <button class="tab-btn" id="tab-camera" onclick="switchTab('camera')">
+                        <i class="fa-solid fa-video"></i> Live Webcam
+                    </button>
+                </div>
+
+                <!-- Upload Tab Content -->
+                <div class="tab-content active" id="content-upload">
+                    <div class="drag-drop-zone" id="drop-zone">
+                        <input type="file" id="file-input" accept="image/*" multiple hidden>
+                        <i class="fa-solid fa-file-image upload-icon"></i>
+                        <p class="upload-text">Drag & drop image files here</p>
+                        <p class="upload-subtext">or <span>browse files</span> from your computer</p>
+                    </div>
+                    <div class="file-preview-list" id="file-list"></div>
+                </div>
+
+                <!-- Camera Tab Content -->
+                <div class="tab-content" id="content-camera">
+                    <div class="camera-stream-wrapper">
+                        <video id="webcam-stream" autoplay playsinline muted></video>
+                        <canvas id="photo-canvas" style="display:none;"></canvas>
+                        <div class="camera-overlay">
+                            <div class="scanner-line"></div>
+                        </div>
+                    </div>
+                    <div class="camera-controls">
+                        <button class="btn btn-primary" id="capture-btn" disabled>
+                            <i class="fa-solid fa-camera"></i> Capture Face
+                        </button>
+                        <button class="btn btn-secondary" id="webcam-toggle-btn">
+                            <i class="fa-solid fa-power-off"></i> Start Stream
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Middle Panel: Visualization & Predictions -->
+            <section class="card results-card" id="results-section">
+                <h2><i class="fa-solid fa-bullseye"></i> Real-time Detections</h2>
+                
+                <div class="display-container">
+                    <div class="image-wrapper" id="image-display-wrapper">
+                        <div class="placeholder-display" id="placeholder-text">
+                            <i class="fa-solid fa-user-astronaut"></i>
+                            <p>Awaiting source image...</p>
+                            <span>Upload a photo or capture via webcam to run demographic predictions.</span>
+                        </div>
+                        <img id="annotated-image-view" class="annotated-view" style="display:none;" alt="Analyzed Faces">
+                    </div>
+                </div>
+
+                <div class="results-list-container">
+                    <h3>Face Details</h3>
+                    <div class="detected-faces-list" id="detected-faces-list">
+                        <div class="empty-list-text">No faces detected yet</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Reports Dashboard -->
+            <section class="card analytics-card" id="analytics-section">
+                <div class="analytics-header">
+                    <h2><i class="fa-solid fa-chart-pie"></i> Demographic Reports</h2>
+                    <button class="btn btn-icon" id="clear-stats-btn" title="Reset Session Data">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                </div>
+                
+                <div class="session-stats-bar">
+                    <div class="stat-box">
+                        <div class="stat-val" id="stat-total-faces">0</div>
+                        <div class="stat-lbl">Faces Analyzed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-val" id="stat-avg-age">N/A</div>
+                        <div class="stat-lbl">Average Age</div>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <h3>Age Group Distribution</h3>
+                    <div class="canvas-container">
+                        <canvas id="age-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <h3>Gender Breakdown</h3>
+                    <div class="canvas-container">
+                        <canvas id="gender-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="action-footer">
+                    <button class="btn btn-accent btn-full" id="export-report-btn" disabled>
+                        <i class="fa-solid fa-download"></i> Export Demographic Report
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>

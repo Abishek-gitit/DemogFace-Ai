@@ -1,0 +1,18 @@
+# Virtual environment
+.venv/
+venv/
+env/
+ENV/
+
+# Data and models (large files)
+data/
+models/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS files
+.DS_Store
+Thumbtack.db
