@@ -68,10 +68,10 @@ This application is ready for cloud deployment. We have prepared an optimized [D
 3. Clone the Space repository and copy the project files there (or connect it to your GitHub).
 4. Upload the model file `models/best_age_gender_resnet18.pth` directly through the Hugging Face web interface (as it exceeds GitHub's 100MB direct file limit).
 
-### Option 2: Render / Railway / Google Cloud Run
-1. Connect your GitHub repository to [Render](https://render.com) or [Railway](https://railway.app).
-2. Create a new **Web Service** and choose **Docker** as the environment.
-3. Add the `PORT` environment variable (the Dockerfile will automatically bind to it).
+### Option 2: Render (Instant One-Click Deployment)
+You can deploy this application directly to Render with a single click. Render will build the container from our optimized Dockerfile and automatically download the model weights from our public Hugging Face Model repository.
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Abishek-gitit/DemogFace-Ai)
 
 ### Deployed Application Link
 👉 **Live Demo:** [https://abishek-gitit-demogface-ai.hf.space](https://huggingface.co/spaces/Abishek-gitit/DemogFace-Ai) *(Replace with your live URL once active)*
