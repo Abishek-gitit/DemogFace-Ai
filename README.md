@@ -55,3 +55,24 @@ python src/train.py --epochs 10 --batch_size 64
 * **Upload Area:** Drag & drop single or batches of images.
 * **Demographic Reports:** Interactive pie charts and histograms showing age distribution and gender split generated dynamically using Chart.js.
 * **Export Reports:** Download a comprehensive session report detailing all processed faces as a text file.
+
+---
+
+## 🌐 Deployment
+
+This application is ready for cloud deployment. We have prepared an optimized [Dockerfile](file:///Users/abishekks/.gemini/antigravity/scratch/facial_demographics/Dockerfile) that installs system dependencies for OpenCV and optimizes PyTorch to run on lightweight CPU-only resources.
+
+### Option 1: Hugging Face Spaces (Recommended for Machine Learning apps)
+1. Create a new Space on [Hugging Face Spaces](https://huggingface.co/spaces).
+2. Choose **Docker** as the SDK (select the **Blank** template).
+3. Clone the Space repository and copy the project files there (or connect it to your GitHub).
+4. Upload the model file `models/best_age_gender_resnet18.pth` directly through the Hugging Face web interface (as it exceeds GitHub's 100MB direct file limit).
+
+### Option 2: Render / Railway / Google Cloud Run
+1. Connect your GitHub repository to [Render](https://render.com) or [Railway](https://railway.app).
+2. Create a new **Web Service** and choose **Docker** as the environment.
+3. Add the `PORT` environment variable (the Dockerfile will automatically bind to it).
+
+### Deployed Application Link
+👉 **Live Demo:** [https://abishek-gitit-demogface-ai.hf.space](https://huggingface.co/spaces/Abishek-gitit/DemogFace-Ai) *(Replace with your live URL once active)*
+
