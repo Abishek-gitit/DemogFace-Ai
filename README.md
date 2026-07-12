@@ -74,5 +74,5 @@ You can deploy this application directly to Render with a single click. Render w
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Abishek-gitit/DemogFace-Ai)
 
 ### Deployed Application Link
-👉 **Live Demo:** [https://abishek-gitit-demogface-ai.hf.space](https://huggingface.co/spaces/Abishek-gitit/DemogFace-Ai) *(Replace with your live URL once active)*
+👉 **Live Demo:** [https://demogface-ai.onrender.com](https://demogface-ai.onrender.com)
 
