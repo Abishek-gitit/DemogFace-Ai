@@ -3,6 +3,8 @@ import sys
 import io
 import base64
 import cv2
+print("DEBUG - cv2 attributes:", dir(cv2))
+print("DEBUG - cv2 file path:", getattr(cv2, '__file__', 'no __file__'))
 import numpy as np
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.staticfiles import StaticFiles
